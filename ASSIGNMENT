@@ -1,0 +1,135 @@
+CSCI 355 Project 3
+Reliable Transport Protocol
+70 points
+
+In this assignment you will be implementing the sending and receiving
+transport level code for a simple reliable data transfer protocol.
+There are two parts to this lab.  For the first, you will implement
+the Alternating-Bit Stop and Wait (rdt 3.0) protocol.  For part 2, you
+will implement Go Back N.
+
+To implement, you will use the network simulator that is provided for
+you.  Note, the network simulator is in C++.  You re still free to use
+whatever language you want, but you will need to port the simulator to
+your language of choice.  If you do this, and do it well, have it
+approved by me, and do it early so that others can make use of it, you
+will receive 10 extra credit points (only one will be selected for
+each language).
+
+The procedures you will write are for the sending entity (A) and the
+receiving entity (B). Only unidirectional transfer of data (from A to
+B) is required. Of course, the B side will have to send packets to A
+to acknowledge (positively or negatively) receipt of data. Your
+routines are to be implemented in the form of the procedures described
+below. These procedures will be called by (and will call) procedures
+that I have written which emulate a network environment.
+
+The unit of data passed between the upper layers and your protocols is a message, which is declared in NetSimEvent.h as:
+struct msg 
+{
+    char data[20];
+};
+
+The unit of data passed between your routines and the network layer is the packet, which is declared in NetSimEvent.h as:
+struct pkt {
+    int seqnum;
+    int acknum;
+    int isNAK;
+    int checksum;
+    char payload[20];
+};
+
+All other declarations, as well as the code in transportsim below the
+comment that states "Simulator code below" are for the network
+simulator.  These should remain unchanged.
+
+Your routines will fill in the payload field from the message data
+passed down from layer5. The other packet fields will be used by your
+protocols to insure reliable delivery, as we've seen in class.
+
+The routines you will write are detailed below. As noted above, such
+procedures in real-life would be part of the operating system, and
+would be called by other procedures in the operating system. These
+routines are currently implemented to the point where data
+is sent over a reliable underlying link (i.e. rdt 1.0).
+
+void a_rdt_send(struct msg message), where message is a structure of type msg,
+containing data to be sent to the B-side. This routine will be called
+whenever the upper layer at the sending side (A) has a message to
+send. It is the job of your protocol to insure that the data in such a
+message is delivered in-order, and correctly, to the receiving side
+upper layer.
+
+void a_udt_recv(struct pkt packet), where packet is a structure of
+type pkt. This routine will be called whenever a packet sent from the
+B-side (i.e., as a result of a b_udt_send() being done by a B-side
+procedure) arrives at the A-side. The packet is the (possibly corrupted)
+packet sent from the B-side.
+
+void a_timeout() This routine will be called when A's timer expires
+(thus generating a timer interrupt). You'll probably want to use this
+routine to control the retransmission of packets. See a_starttimer()
+for how the timer is started.
+
+a_init() This routine will be called once, before any of your other
+A-side routines are called. It can be used to do any required
+initialization.
+
+void b_udt_recv(struct pkt packet),where packet is a structure of type
+pkt. This routine will be called whenever a packet sent from the
+A-side (i.e., as a result of a a_udt_send() being done by a A-side
+procedure) arrives at the B-side. packet is the (possibly corrupted)
+packet sent from the A-side.
+
+b_init() This routine will be called once, before any of your other
+B-side routines are called. It can be used to do any required
+initialization.
+
+These preceding procedures are the ones that you will write.  I have
+provided an interface into the network simulator with the following
+functions, that you will have to use:
+
+void a_udt_send(struct pkt packet);
+void b_udt_send(struct pkt packet);
+Calling these routines will cause the packet to be sent into the
+network, destined for the other entity.
+
+void a_starttimer(int timeout); 
+void b_starttimer(int timeout); 
+Start the timer for the appropriate entity.  Timeout will be schedule
+for "timeout" seconds in the future, and will result in the appropiate
+x_timeout function being called.
+
+void a_toLayer5(struct msg message); 
+void b_toLayer5(struct msg message); 
+These functions will be used to deliver data to the application layet,
+upon successful receipt of the data.
+
+
+
+
+The simulated network environment.  
+
+You have several options when starting the program that you can use to configure the behavior of the simulator.  The command line options include:
+
+b - for bidirectional communication.  This is for the extra credit.
+
+c - after the c option, enter a float percentage for the percentage of packets to be corrupted.
+
+l - after the l option, enter a float percentage for the percentage of packets to be lost.
+
+p - enter the number of packets to send
+
+d - enter the delay between packets
+
+
+Extra credit.
+
+The basic lab requires you to implement only for unidirectional
+communication.  That is, data is only sent from A to B.  Keep in mind
+that control packets will be sent from B to A.  However, if you
+implement the protocols such that bidirectional communication is
+supported you will get 10 points extra credit.
+
+
+Hand in all code to the appropriate directory, that is /courses/csci355/s11/username/p3.
