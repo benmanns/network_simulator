@@ -1,0 +1,7 @@
+= Unreliable Network Simulator (Ruby)
+
+Author:: Benjamin Manns (benmanns@gmail.com)
+Copyright:: Copyright 2011 Benjamin Manns
+License:: Distributed under the MIT License, see LICENSE.
+
+This is a Ruby implementation of the Unreliable Network Simulator for Dr. Shaneck's reliable data transfer protocol project for CSCI 355 at Liberty University.
