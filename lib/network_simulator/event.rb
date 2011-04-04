@@ -1,4 +1,6 @@
 class NetworkSimulator::Event
+  include Comparable
+
   attr_accessor :time
   attr_accessor :type
   attr_accessor :entity
@@ -12,5 +14,9 @@ class NetworkSimulator::Event
     @time = time
     @type = type
     @entity = entity
+  end
+
+  def <=> event
+    @time <=> event.time
   end
 end
