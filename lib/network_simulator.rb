@@ -52,4 +52,9 @@ module NetworkSimulator
     start_timer timeout, :a
   end
   module_function :a_start_timer
+
+  def b_start_timer timeout
+    start_timer timeout, :b
+  end
+  module_function :b_start_timer
 end
