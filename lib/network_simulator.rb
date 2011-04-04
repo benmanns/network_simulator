@@ -62,4 +62,9 @@ module NetworkSimulator
     generate_send packet, :b
   end
   module_function :a_udt_send
+
+  def b_udt_send packet
+    generate_send packet, :a
+  end
+  module_function :b_udt_send
 end
