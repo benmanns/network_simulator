@@ -42,4 +42,9 @@ module NetworkSimulator
     puts "B successfully received this message: #{message.data}"
   end
   module_function :b_to_layer_five
+
+  def start_timer timeout, entity
+    $events << NetworkSimulator::Event.new($current_time + timeout, :timeout, entity)
+  end
+  module_function :start_timer
 end
