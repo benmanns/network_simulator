@@ -37,4 +37,9 @@ module NetworkSimulator
     puts "A successfully received this message: #{message.data}"
   end
   module_function :a_to_layer_five
+
+  def b_to_layer_five message
+    puts "B successfully received this message: #{message.data}"
+  end
+  module_function :b_to_layer_five
 end
