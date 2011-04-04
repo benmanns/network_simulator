@@ -47,4 +47,9 @@ module NetworkSimulator
     $events << NetworkSimulator::Event.new($current_time + timeout, :timeout, entity)
   end
   module_function :start_timer
+
+  def a_start_timer timeout
+    start_timer timeout, :a
+  end
+  module_function :a_start_timer
 end
