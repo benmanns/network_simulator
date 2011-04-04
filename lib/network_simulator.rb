@@ -57,4 +57,9 @@ module NetworkSimulator
     start_timer timeout, :b
   end
   module_function :b_start_timer
+
+  def a_udt_send packet
+    generate_send packet, :b
+  end
+  module_function :a_udt_send
 end
