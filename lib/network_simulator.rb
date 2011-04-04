@@ -32,4 +32,9 @@ module NetworkSimulator
     $events << event
   end
   module_function :generate_send
+
+  def a_to_layer_five message
+    puts "A successfully received this message: #{message.data}"
+  end
+  module_function :a_to_layer_five
 end
