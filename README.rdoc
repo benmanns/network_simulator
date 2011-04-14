@@ -22,3 +22,14 @@ a_to_layer_five message:: Sends a message from a to the application (stdout).
 b_to_layer_five message:: Sends a message from b to the application (stdout).
 a_stop_timer:: Stops the timer in a.
 b_stop_timer:: Stops the timer in b.
+
+See unreliable.rb for a demo application running an unreliable data transfer algorithm.
+The basic process for using this library is:
+1. Extract the library (specifically the lib/ folder) to your project directory.
+1. Insert the following to your project file.
+    $LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'lib')
+    require 'network_simulator'
+
+    include NetworkSimulator
+1. Insert the following to the end of your file.
+    NetworkSimulator::Main.run!
