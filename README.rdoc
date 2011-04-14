@@ -12,3 +12,13 @@ $corruption:: Float holds the chance of single byte or single flag corruption (0
 $loss:: Float holds the chance of packet loss (0 <= $loss <= 1)
 $delay:: Fixnum holds the simulated average delay between packets
 $current_time:: Fixnum holds the simulated time
+
+You will have access to the following methods for sending and receiving data
+a_udt_send packet:: Sends packet of class Packet via a unreliably.
+b_udt_send packet:: Sends packet of class Packet via b unreliably.
+a_start_timer timeout:: Starts a timer in a with timeout of class Fixnum.
+b_start_timer timeout:: Starts a timer in b with timeout of class Fixnum.
+a_to_layer_five message:: Sends a message from a to the application (stdout).
+b_to_layer_five message:: Sends a message from b to the application (stdout).
+a_stop_timer:: Stops the timer in a.
+b_stop_timer:: Stops the timer in b.
