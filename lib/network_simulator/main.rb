@@ -62,9 +62,17 @@ class NetworkSimulator::Main
           end
         when :timeout
           if event.entity == :a
-            a_timeout if defined? :a_timeout
+            if $a_timer_disabled
+              $a_timer_disabled = nil
+            else
+              a_timeout if defined? :a_timeout
+            end
           else
-            b_timeout if defined? :b_timeout
+            if $b_timer_disabled
+              $b_timer_disabled = nil
+            else
+              b_timeout if defined? :b_timeout
+            end
           end
         when :receive_data
           packet = event.packet

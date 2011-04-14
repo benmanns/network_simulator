@@ -68,4 +68,14 @@ module NetworkSimulator
     generate_send packet, :a
   end
   module_function :b_udt_send
+
+  def a_stop_timer
+    $a_timer_disabled = true
+  end
+  module_function :a_stop_timer
+
+  def b_stop_timer
+    $b_timer_disabled = true
+  end
+  module_function :b_stop_timer
 end
