@@ -19,6 +19,7 @@ module NetworkSimulator
     corruption_chance = rand
     if corruption_chance < $corruption
       puts '        Packet being corrupted'
+      packet = packet.clone
       if corruption_chance < 0.75
         event.packet.payload[0] = event.packet.payload[0].next if event.packet.payload
       elsif corruption_chance < 0.90
