@@ -15,17 +15,17 @@ module NetworkSimulator
     time = $current_time + $delay + random_modification
     puts "next time is #{$current_time + $delay} and the modification to the time is #{random_modification}"
     event = NetworkSimulator::Event.new time, :receive_data, entity
+    packet = packet.clone
 
     corruption_chance = rand
     if corruption_chance < $corruption
       puts '        Packet being corrupted'
-      packet = packet.clone
       if corruption_chance < 0.75
-        event.packet.payload[0] = event.packet.payload[0].next if event.packet.payload
+        packet.payload[0] = packet.payload[0].next if packet.payload
       elsif corruption_chance < 0.90
-        event.packet.seq += 1 if event.packet.seq
+        packet.seq += 1 if packet.seq
       else
-        event.packet.ack += 1 if event.packet.ack
+        packet.ack += 1 if packet.ack
       end
     end
 
