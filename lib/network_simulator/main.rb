@@ -19,6 +19,8 @@ class NetworkSimulator::Main
       packets_to_send = (opt['p'] || 10).to_i
       $delay = (opt['d'] || 25).to_i
       $current_time = 0
+      $a_timer_disabled = 0
+      $b_timer_disabled = 0
 
       puts
       puts
@@ -62,14 +64,14 @@ class NetworkSimulator::Main
           end
         when :timeout
           if event.entity == :a
-            if $a_timer_disabled
-              $a_timer_disabled = nil
+            if $a_timer_disabled > 0
+              $a_timer_disabled -= 1
             else
               a_timeout if defined? :a_timeout
             end
           else
-            if $b_timer_disabled
-              $b_timer_disabled = nil
+            if $b_timer_disabled > 0
+              $b_timer_disabled -= 1
             else
               b_timeout if defined? :b_timeout
             end
